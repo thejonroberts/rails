@@ -10,6 +10,7 @@ module TestUnit # :nodoc:
       class_option :copy_template, type: :boolean, default: false
 
       def create_test_files
+        # separate to hook to share with devcontainer generator?
         if !File.exist?(File.join("test/application_system_test_case.rb"))
           template "application_system_test_case.rb", File.join("test", "application_system_test_case.rb")
         end

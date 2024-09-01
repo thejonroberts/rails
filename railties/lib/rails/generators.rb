@@ -306,13 +306,20 @@ module Rails
           @command_type ||= "generator"
         end
 
+
         def lookup_paths # :doc:
           @lookup_paths ||= %w( rails/generators generators )
         end
 
+
         def file_lookup_paths # :doc:
           @file_lookup_paths ||= [ "{#{lookup_paths.join(',')}}", "**", "*_generator.rb" ]
         end
+
+        # NOPE
+        # def templates_root
+        #   "lib/templates"
+        # end
 
         def run_after_generate_callback
           if defined?(@@generated_files) && !@@generated_files.empty?

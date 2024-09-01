@@ -11,6 +11,8 @@ module Rails
 
       hook_for :test_framework
 
+
+
       private
         def file_name
           @_file_name ||= super.sub(/_helper\z/i, "")

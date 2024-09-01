@@ -18,6 +18,10 @@ module Erb # :nodoc:
           :erb
         end
 
+        # how to determine scaffold_controller vs controller
+
+        # def template_file_name_with_extensions(name, file_format = format)
+
         def filename_with_extensions(name, file_format = format)
           [name, file_format, handler].compact.join(".")
         end

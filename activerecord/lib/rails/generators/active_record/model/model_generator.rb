@@ -19,6 +19,7 @@ module ActiveRecord
         desc: "Copy template file(s) to your template directory"
 
 
+      # what is this? can i use this?
       Rails::Generators.templates_path.each do |path|
         source_paths << File.join(path, base_name, "migration")
       end

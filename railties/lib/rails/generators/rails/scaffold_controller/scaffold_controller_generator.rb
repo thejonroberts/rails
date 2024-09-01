@@ -44,6 +44,7 @@ module Rails
         invoke route unless options.skip_routes?
       end
 
+
       hook_for :test_framework, as: :scaffold
 
       # Invoke the helper using the controller name (pluralized)

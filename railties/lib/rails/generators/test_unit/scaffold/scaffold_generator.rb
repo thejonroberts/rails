@@ -16,6 +16,9 @@ module TestUnit # :nodoc:
       class_option :system_tests, type: :string,
                          desc: "Skip system test files"
 
+      class_option :copy_template, type: :boolean, default: false,
+        desc: "Copy template file(s) to your template directory"
+
       argument :attributes, type: :array, default: [], banner: "field:type field:type"
 
       def create_test_files
@@ -23,8 +26,24 @@ module TestUnit # :nodoc:
         template template_file,
                  File.join("test/controllers", controller_class_path, "#{controller_file_name}_controller_test.rb")
 
+        #  why this instead of hook for system tests?
         if !options.api? && options[:system_tests]
           template "system_test.rb", File.join("test/system", class_path, "#{file_name.pluralize}_test.rb")
+        end
+      end
+
+      def copy_template_files
+        puts "options[:system_tests]: #{options[:system_tests]}"
+        return unless options[:copy_template]
+
+        template_name = options.api? ? "api_functional_test.rb.tt" : "functional_test.rb.tt"
+        template_base = File.join("lib/templates")
+        template_path = "test_unit/scaffold"
+        destination_path = File.join(destination_root, template_base, template_path)
+        copy_file template_name, File.join(destination_path, template_name)
+
+        if !options.api? && options[:system_tests]
+
         end
       end
 
