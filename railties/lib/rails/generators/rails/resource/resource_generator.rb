@@ -17,6 +17,8 @@ module Rails
 
       hook_for :resource_route, required: true
 
+
+
       class << self
         def desc(description = nil)
           ERB.new(File.read(usage_path)).result(binding)

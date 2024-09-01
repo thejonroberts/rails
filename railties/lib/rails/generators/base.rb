@@ -237,6 +237,11 @@ module Rails
         __dir__
       end
 
+      # (NOPE)
+      # def self.templates_root
+      #   "lib/templates"
+      # end
+
       # Cache source root and add lib/generators/base/generator/templates to
       # source paths.
       def self.inherited(base) # :nodoc:

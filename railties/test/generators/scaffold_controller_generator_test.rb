@@ -361,4 +361,16 @@ class ScaffoldControllerGeneratorTest < Rails::Generators::TestCase
   ensure
     Object.send :remove_const, :UsersController
   end
+
+  def test_template_copy
+    run_generator ["User", "name:string", "age:integer", "--copy-template"]
+
+    assert_file "lib/templates/rails/scaffold_controller/controller.rb.tt"
+
+    assert_file "lib/templates/erb/scaffold/index.html.erb.tt"
+    assert_file "lib/templates/erb/scaffold/show.html.erb.tt"
+    assert_file "lib/templates/erb/scaffold/new.html.erb.tt"
+    assert_file "lib/templates/erb/scaffold/edit.html.erb.tt"
+    assert_file "lib/templates/erb/scaffold/_form.html.erb.tt"
+  end
 end

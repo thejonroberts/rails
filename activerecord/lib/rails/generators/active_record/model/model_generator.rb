@@ -15,7 +15,11 @@ module ActiveRecord
       class_option :indexes, type: :boolean, default: true, desc: "Add indexes for references and belongs_to columns"
       class_option :primary_key_type, type: :string, desc: "The type for primary key"
       class_option :database, type: :string, aliases: %i(--db), desc: "The database for your model's migration. By default, the current environment's primary database is used."
+      class_option :copy_template, type: :boolean, default: false,
+        desc: "Copy template file(s) to your template directory"
 
+
+      # what is this? can i use this?
       Rails::Generators.templates_path.each do |path|
         source_paths << File.join(path, base_name, "migration")
       end
@@ -31,6 +35,15 @@ module ActiveRecord
       def create_model_file
         generate_abstract_class if database && !custom_parent?
         template "model.rb", File.join("app/models", class_path, "#{file_name}.rb")
+      end
+
+      def copy_template_files
+        return unless options[:copy_template]
+
+        template_base_path = File.join("lib/templates")
+        destination_path = File.join(destination_root, template_base_path, "activerecord")
+        template_file_name = "model.rb.tt"
+        copy_file template_file_name, File.join(destination_path, template_file_name)
       end
 
       def create_module_file

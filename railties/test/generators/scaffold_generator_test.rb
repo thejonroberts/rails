@@ -686,4 +686,45 @@ class ScaffoldGeneratorTest < Rails::Generators::TestCase
       assert_not File.exist?("app/helpers/bukkits/users_helper.rb")
     end
   end
+
+  def test_template_copy
+    run_generator ["User", "name:string", "age:integer", "--copy-template"]
+
+    # model
+    assert_file "app/models/user.rb"
+    assert_file "lib/templates/activerecord/model.rb.tt"
+    # model test
+    assert_file "test/models/user_test.rb"
+    # todo
+    assert_file "test/fixtures/users.yml"
+    # todo
+
+    # controller
+    assert_file "app/controllers/users_controller.rb"
+    assert_file "lib/templates/rails/scaffold_controller/controller.rb.tt"
+    # views
+    assert_file "app/views/users/index.html.erb"
+    assert_file "lib/templates/erb/scaffold/index.html.erb.tt"
+    assert_file "app/views/users/show.html.erb"
+    assert_file "lib/templates/erb/scaffold/show.html.erb.tt"
+    assert_file "app/views/users/new.html.erb"
+    assert_file "lib/templates/erb/scaffold/new.html.erb.tt"
+    assert_file "app/views/users/edit.html.erb"
+    assert_file "lib/templates/erb/scaffold/edit.html.erb.tt"
+    assert_file "app/views/users/_form.html.erb"
+    assert_file "lib/templates/erb/scaffold/_form.html.erb.tt"
+
+
+    # TODO test files
+    # controller / integration / request
+    assert_file "test/controllers/users_controller_test.rb"
+    assert_file "lib/templates/test_unit/scaffold/functional_test.rb.tt"
+
+    # system
+    assert_file "test/system/users_test.rb"
+    assert_file "lib/templates/test_unit/system/system_test.rb.tt"
+
+    assert_file "app/helpers/users_helper.rb"
+    # no helper tests generated.
+  end
 end

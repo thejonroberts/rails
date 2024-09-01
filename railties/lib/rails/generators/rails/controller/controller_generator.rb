@@ -8,10 +8,22 @@ module Rails
       class_option :helper, type: :boolean
       class_option :parent, type: :string, default: "ApplicationController", desc: "The parent class for the generated controller"
 
+      class_option :copy_template, type: :boolean, default: false,
+        desc: "Copy template file(s) to your template directory"
+
       check_class_collision suffix: "Controller"
 
       def create_controller_files
         template "controller.rb", File.join("app/controllers", class_path, "#{file_name}_controller.rb")
+      end
+
+      def copy_file_templates
+        return unless options[:copy_template]
+
+        template_base_path = File.join("lib/templates")
+        destination_path = File.join(destination_root, template_base_path, "rails/controller")
+        template_file_name = "controller.rb.tt"
+        copy_file template_file_name, File.join(destination_path, template_file_name)
       end
 
       def add_routes
