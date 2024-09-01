@@ -12,6 +12,9 @@ module Rails
         desc: "Generate API-only controller and tests, with no view templates"
       class_option :resource_route, type: :boolean
 
+      class_option :copy_template, type: :boolean, default: false,
+        desc: "Copy template file(s) to your template directory"
+
       hook_for :scaffold_controller, required: true
     end
   end

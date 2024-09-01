@@ -30,4 +30,11 @@ class SystemTestGeneratorTest < Rails::Generators::TestCase
     assert_no_file "test/system/users_test_test.rb"
     assert_file "test/system/users_test.rb"
   end
+
+  def test_template_copy
+    run_generator %w(user --copy-template)
+
+    assert_file "test/system/users_test.rb"
+    assert_file "lib/templates/test_unit/system/system_test.rb.tt"
+  end
 end

@@ -134,4 +134,16 @@ class ControllerGeneratorTest < Rails::Generators::TestCase
     assert_no_file "app/helpers/account_controller_helper.rb"
     assert_file "app/helpers/account_helper.rb"
   end
+
+  def test_template_copy
+    run_generator ["account", "foo", "bar", "--copy-template"]
+
+    assert_file "app/controllers/account_controller.rb" do |controller|
+      assert_instance_method :foo, controller
+      assert_instance_method :bar, controller
+    end
+
+    assert_file "lib/templates/rails/controller/controller.rb.tt"
+    assert_file "lib/templates/erb/controller/view.html.erb.tt"
+  end
 end

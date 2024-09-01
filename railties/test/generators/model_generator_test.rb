@@ -600,6 +600,12 @@ class ModelGeneratorTest < Rails::Generators::TestCase
                              "one" => nil, "two" => nil)
   end
 
+  def test_template_copy
+    run_generator ["Account", "name:string", "age:integer", "--copy-template"]
+
+    assert_file "lib/templates/activerecord/model.rb.tt"
+  end
+
   private
     def assert_generated_fixture(path, parsed_contents)
       fixture_file = File.new File.expand_path(path, destination_root)
